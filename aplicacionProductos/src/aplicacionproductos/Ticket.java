@@ -58,6 +58,8 @@ public class Ticket extends JFrame {
               add(jlabelNoProductos);   
         } else {
             jTicket.append("\nTotal: " + producto.SumaProductos());
+            jTicket.append("\n Descuento del "+ VentanaProductos.porcentaje+"%");
+            jTicket.append("\nTotal con descuento "+ VentanaProductos.descuento);
         }
 
         //  jTicket.append("\n "+"RFC :"+VentanaProductos.txtRfc.getText());

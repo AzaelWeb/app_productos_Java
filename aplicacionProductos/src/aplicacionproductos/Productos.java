@@ -56,11 +56,14 @@ public class Productos {
    public float SumaProductos(){
        float precioTotal = 0;
        Productos producto = new Productos();
-    
+       
+       
 
        for(int i = 0; i<arregloProductos.size(); i++){
            producto = (Productos) VentanaProductos.arregloProductos.get(i);
-           precioTotal += producto.getPrecio();
+           
+         precioTotal += producto.getPrecio();
+          
        }
       
        

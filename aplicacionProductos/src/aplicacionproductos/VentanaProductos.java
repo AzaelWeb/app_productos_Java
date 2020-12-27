@@ -22,11 +22,15 @@ public class VentanaProductos extends JFrame {
 
     private JLabel jlNombre, jlRfc, jlNombreProducto, jlPrecio;
     public static JTextField txtNombre, txtRfc, txtNombreProducto, txtPrecio;
-    private JButton btnGuardar, btnMostrarProductos;
-    public static  ArrayList arregloProductos = new ArrayList();
+    private JButton btnGuardar, btnMostrarProductos, btnDescuento;
+    public static ArrayList arregloProductos = new ArrayList();
+    Productos producto = new Productos();
+    public static float descuento = 0;
+    public static int porcentaje = 0;
+   // public static float n = 0;//  private JButton btnAgregarProducto, btnCancelar, btnCobrar;
+            //private JButton btn7,btn8,btn9,btn4,btn5,btn6,btn1,btn2,btn3;
 
-    //  private JButton btnAgregarProducto, btnCancelar, btnCobrar;
-    //private JButton btn7,btn8,btn9,btn4,btn5,btn6,btn1,btn2,btn3;
+
     public VentanaProductos() {
         setLayout(null);
         jlNombre = new JLabel();
@@ -39,7 +43,7 @@ public class VentanaProductos extends JFrame {
         jlRfc.setBounds(10, 45, 200, 30);
         add(jlRfc);
 
-        jlNombreProducto= new JLabel();
+        jlNombreProducto = new JLabel();
         jlNombreProducto.setText("Producto:");
         jlNombreProducto.setBounds(10, 80, 200, 30);
         add(jlNombreProducto);
@@ -77,6 +81,29 @@ public class VentanaProductos extends JFrame {
         add(btnMostrarProductos);
         //btnMostrarProductos.addActionListener(this);
 
+        btnDescuento = new JButton();
+        btnDescuento.setText("Descuento");
+        btnDescuento.setBounds(220, 80, 100, 25);
+        add(btnDescuento);
+
+        btnDescuento.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                String prec = txtPrecio.getText();
+
+                if (prec.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingresa primero el precio, para hacer un descuento ", "Ingresa un precio", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    porcentaje = Integer.parseInt(JOptionPane.showInputDialog("Ingresa el descuento"));
+                    producto.setPrecio(Float.parseFloat(prec));
+                    descuento = producto.getPrecio() - (producto.getPrecio() * porcentaje / 100);
+                   // n = descuento - producto.SumaProductos();
+                    System.out.println(descuento);
+                }
+
+            }
+        });
+
         btnGuardar.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -98,44 +125,42 @@ public class VentanaProductos extends JFrame {
                                 JOptionPane.showMessageDialog(null, "Producto capturado con exito!");
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "Debes ingresar el precio del producto","Ingresa los datos",JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Debes ingresar el precio del producto", "Ingresa los datos", JOptionPane.WARNING_MESSAGE);
                             }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Debes ingresar el nombre del producto","Ingresa los datos",JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Debes ingresar el nombre del producto", "Ingresa los datos", JOptionPane.WARNING_MESSAGE);
                         }
 
                     } else {
-                        JOptionPane.showMessageDialog(null, "Debes ingresar el rfc!","Ingresa los datos",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Debes ingresar el rfc!", "Ingresa los datos", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Debes ingresar un nombre!","Ingresa los datos",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Debes ingresar un nombre!", "Ingresa los datos", JOptionPane.WARNING_MESSAGE);
                 }
 
             }
         });
-        
-        
+
         btnMostrarProductos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Object O [] = null;
-                
-                if(arregloProductos.isEmpty()){
-                   JOptionPane.showMessageDialog(null,"Debes ingresar y guardar primero los datos","Datos no ingresados",JOptionPane.ERROR_MESSAGE);
-                }else{
-                      for(int i = 0; i<arregloProductos.size(); i++){
-                    Productos prod = (Productos) arregloProductos.get(i);
-                    modelo.addRow(O);
-                    modelo.setValueAt(prod.getNombre(),i, 0);
-                    modelo.setValueAt(prod.getRfc(),i,1);
-                    modelo.setValueAt(prod.getNombreProducto(),i,2);
-                    modelo.setValueAt(prod.getPrecio(),i,3);
+                Object O[] = null;
+
+                if (arregloProductos.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Debes ingresar y guardar primero los datos", "Datos no ingresados", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    for (int i = 0; i < arregloProductos.size(); i++) {
+                        Productos prod = (Productos) arregloProductos.get(i);
+                        modelo.addRow(O);
+                        modelo.setValueAt(prod.getNombre(), i, 0);
+                        modelo.setValueAt(prod.getRfc(), i, 1);
+                        modelo.setValueAt(prod.getNombreProducto(), i, 2);
+                        modelo.setValueAt(prod.getPrecio(), i, 3);
+                    }
                 }
-                }
-                
-              
+
             }
-            
+
         });
     }
 }
